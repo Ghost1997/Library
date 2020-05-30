@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= pageTitle %></title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <% if (errorMessage) { %>
+        <div class="alert alert-warning" style="text-align: center; width: auto;"><%= errorMessage %></div>
+        <% } %>
+    <nav class="navbar navbar-expand-sm navbar-light justify-content-center"
+        style="background-color: #f4511e; height:65px; color:white;">
+        <a class="navbar-brand"
+            style="position:absolute; left:20px;  padding:10px; border-radius:2px; box-shadow: 5px 5px 5px scarlet;"
+            href="<%= process.env.HOST %>/home">
+            <h4 style="color:white; font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold;">
+                HOME</h4>
+        </a>
+        <a class="navbar-brand" style="position:absolute; right:20px;" href="<%= process.env.HOST %>/logout">
+            <h5 style="color:white;font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold; ">
+                LOG OUT</h5>
+        </a>
+        <span style="color:white; font-family: Montserrat, sans-serif;">
+            <h1>REMOVE STUDENT</h1>
+            
+        </span>
+    </nav>
+    <div class="container text-center" style="margin-top:30px;">
+    <div>
+        <form action="/searchstu" method="post">
+        <!-- <label>Search</label> -->
+        <input name="stuid" style="width:300px; height: 38px; text-align:center; border-radius:3px;" value="<%= value %>" placeholder="Library No" type="text"/>
+        <input type="submit" value="Search Student" style="background-color:#f4511e; height:40px;border:4px solid #f4511e; border-radius:3px; box-shadow: 2px 2px 2px gray; width: 120px;" name="searchItem" />
+        </form>
+        <br> 
+        </div>
+    </div>
+    <% if(condition){ %>
+    <div class="d-flex table-data" >
+        <table class="table table-striped table-bordered table-light">
+            <br>
+            <thead style="background-color: #f4511e;color:white;">
+                <tr>
+                    <th>S/No</th>
+                    <th>LIBRARY NO</th>
+                    <th>ROLL NO</th>
+                    <th>NAME</th>
+                    <th>CLASS</th>
+                    <th>SECTION</th>
+                    <th>GENDER</th>
+                    <th>EMAIL</th>
+                    <th>ACTION</th>
+                    
+
+                </tr>
+            </thead>
+            <% if(data.length){ 
+          for(var i = 0;i < data.length;i++) { %>
+            <tbody id="tbody">
+                <tr>
+                    <td><%=(i+1)%></td>
+                    <td><%=data[i].lib_no%></td>
+                    <td><%=data[i].roll_no%></td>
+                    <td><%=data[i].name%></td>
+                    <td><%=data[i].std%></td>
+                    <td><%=data[i].section%></td>
+                    <td><%=data[i].gender%></td>
+                    <td><%=data[i].email%></t>
+                    <td><form action="/deleteStudent" method="post">
+                        <input type="hidden" name=id value="<%= value %>">
+                        <input type="submit" value="Remove" style="background-color:#f4511e; height:40px;border:4px solid #f4511e; border-radius:3px; box-shadow: 2px 2px 2px gray; width: 120px;" name="Remove" />
+                        </form></td>
+                </tr>
+                <% }
+      }else{ %>
+                <tr>
+                    <td align="center" colspan="9">No Books Found</td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+</body>
+
+    
+
+</html>

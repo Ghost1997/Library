@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= pageTitle %></title>
+    <meta charset="UTF-8">
+    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <% if (errorMessage) { %>
+		<div class="alert alert-warning" style="text-align: center; width: auto;"><%= errorMessage %></div>
+	<% } %>
+    <nav class="navbar navbar-expand-sm navbar-light justify-content-center" style="background-color: #f4511e; height:65px; color:white;">
+        <a class="navbar-brand" style="position:absolute; left:20px;  padding:10px; border-radius: 2px ; box-shadow: 5px 5px 5px scarlet;" href=`<%= process.env.HOST %>/home`>
+            <h4 style="color:white; font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold;">
+                HOME
+            </h4>
+        </a>
+        <a class="navbar-brand" style="position:absolute; right:20px;" href="<%= process.env.HOST %>/logout">
+            <h5 style="color:white;font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold; ">LOGOUT</h5>
+        </a>
+        <span style="color:white; font-family: Montserrat, sans-serif;">
+            <h1>ADD NEW BOOK</h1>
+        </span>
+    </nav>
+
+    <main>
+        <div class="container text-center" style="margin-top:20px; width: 600px;">
+            <div class="container">
+                <div class="card bg-light">
+                    <article class="card-body mx-auto" style="max-width: 300px;">
+                        <form action="/addBook" method="post" enctype="multipart/form-data">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-id-card"></i></span>
+                                </div>
+                                <input name="bookId" class="form-control" value="<%= book.bookid %>" placeholder="Book ID" type="text" required>
+                            </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-book"></i></span>
+                                </div>
+                                <input name="name" class="form-control" value="<%= book.name %>" placeholder="Name" type="text"  required>
+                            </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input name="author" class="form-control" value="<%= book.author %>" placeholder="Author" type="text"  required>
+                            </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-book-open"></i> </span>
+                                </div>
+                                <select  name="type" class="custom-select" required>
+                                    <option disabled selected value>Category</option>
+                                    <option>Action and Adventure</option>
+                                    <option>Anthology</option>
+                                    <option>Classic</option>
+                                    <option>Comic and Graphic Novel</option>
+                                    <option>Crime and Detective</option>
+                                    <option>Drama</option>
+                                    <option>Fable</option>
+                                    <option>Fairy Tale</option>
+                                    <option>Fantasy</option>
+                                    <option>Horror</option>
+                                    <option>Humor</option>
+                                    <option>Mystery</option>
+                                    <option>Mythology</option>
+                                    <option>Realistic Fiction</option>
+                                    <option>Romance</option>
+                                    <option>Sci-Fi</option>
+                                    <option>Short Story</option>
+                                    <option>Suspense/Thriller</option>
+                                    <option>Biography/Autobiography</option>
+                                    <option>Reference Books</option>
+                                    <option>Self-help Book</option>
+                                    <option>Speech</option>
+                                    <option>Textbook</option>
+                                    <option>Poetry</option>
+                                    <option>Novel</option>
+                                    
+                                </select>
+                            </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fab fa-quora"></i></span>
+                                </div>
+                                <input name="qty" class="form-control" value="<%= book.qty %>" placeholder="Qty" type="number"  required>
+                            </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input name="days" class="form-control" value="<%= book.days %>" placeholder="Issue Days" type="number"  required>
+                            </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-rupee-sign"></i></span>
+                                </div>
+                                <input name="cost" class="form-control" value="<%= book.cost %>" placeholder="Cost" type="number"  required>
+                            </div>
+                            <div class="form-group" style="background-color:#f4511e;">
+                                <button type="submit" class="btn btn-primary btn-block " name="create" style="background-color: #f4511e; border: 2px solid #f4511e;">Submit</button>
+                            </div>
+                            <div class="d-flex justify-content-center ">
+                            </div>
+                            <div>
+                        </form>
+
+                    </article>
+                </div>
+            </div>
+    </main>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center ">
+    <a href="<%= process.env.HOST %>/getBooks" style="text-decoration: none;"><button type="button" class="btn btn-primary btn-block " name="getbooks" style="background-color: #f4511e;  width: 200px; border: 2px solid #f4511e;">View All Books</button></a>
+</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

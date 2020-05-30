@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .wrap {
+            padding-top: 30px;
+        }
+
+        .glyphicon {
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+
+        small {
+            display: block;
+            color: #888;
+        }
+
+        .well {
+            border: 1px solid blue;
+        }
+        .center {
+	
+	position: absolute;
+	top:0;
+	bottom: 100px;
+	left: 0;
+	right: 0;
+  	
+	margin: auto;
+}
+    </style>
+</head>
+
+<body>
+    <% if (errorMessage) { %>
+    <div class="alert alert-warning" style="text-align: center; width: auto;"><%= errorMessage %></div>
+    <% } %>
+    <nav class="navbar navbar-expand-sm navbar-light justify-content-center"
+        style="background-color: #f4511e; height:65px; color:white;">
+        <a class="navbar-brand"
+            style="position:absolute; left:20px;  padding:10px; border-radius:2px; box-shadow: 5px 5px 5px scarlet;"
+            href="<%= process.env.HOST %>/home">
+            <h4 style="color:white; font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold;">
+                HOME</h4>
+        </a>
+        <a class="navbar-brand" style="position:absolute; right:20px;" href="<%= process.env.HOST %>/logout">
+            <h5 style="color:white;font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold; ">
+                LOG OUT</h5>
+        </a>
+        <span style="color:white; font-family: Montserrat, sans-serif;">
+            <h1>INDIVIDUAL ISSUE STATUS</h1>
+        </span>
+    </nav>
+    <div class="container text-center" >
+        <div>
+            <br>
+            <form action="/searchStudent" method="post">
+                <!-- <label>Search</label> -->
+                <input name="id" style="width:300px; height: 38px; text-align:center; border-radius:3px;" placeholder="Library No" type="text" />
+                <input type="submit" value="Search Student"
+                    style="background-color:#f4511e; height:40px;border:4px solid #f4511e; border-radius:3px; box-shadow: 2px 2px 2px gray; width: 120px;"
+                    name="search" />
+            </form>
+            <br>
+        </div>
+    </div>
+    <% if(condition){%>
+    <div class="container wrap"  >
+        <div class="row">
+            <div style="border: 1px solid red; height: 230px; width: 450px; " class="center"  >
+                <div >
+                    <div class="row">
+                        <div style="margin-left: 30px; margin-top: 15px;">
+                            <img width="150" height="200"src="/<%= data[0].image %>" alt="" class="img-rounded img-responsive" />
+                        </div>
+                        <div style="margin-left: 50px; margin-top: 20px;">
+                            <h4 style="text-align: left;"><%= data[0].name %></h4>
+                            <p style="text-align: left;">
+                                <i class="glyphicon glyphicon-envelope" ></i>Library No: <%= data[0].lib_no %>
+                                <br />
+                                <i class="glyphicon glyphicon-envelope"></i>Class: <%= data[0].std %>
+                                <br />
+                                <i class="glyphicon glyphicon-envelope"></i>Section: <%= data[0].section %>
+                                <br />
+                                <i class="glyphicon glyphicon-envelope"></i>Roll No: <%= data[0].roll_no %>
+                                <br />
+                                <i class="glyphicon glyphicon-envelope"></i>Gender: <%= data[0].gender %>
+                                <br />
+                                <i class="glyphicon glyphicon-envelope"></i>Email: <%= data[0].email %>    
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 style="text-align: center; margin-top: 230px;">Issued Books</h3>
+    <div class="d-flex table-data" style="margin-top: 20px;">
+        
+        <table class="table table-striped table-bordered table-light" >
+            <br>
+            <thead style="background-color: #f4511e;color:white;">
+                <tr>
+                    <th>S/No</th>
+                    <th>ISSUE ID</th>
+                    <th>LIB NO</th>
+                    <th>NAME</th>
+                    <th>BOOK ID</th>
+                    <th>BOOK NAME</th>
+                    <th>ISSUE DATE</th>
+                    <th>DUE DATE</th>
+                    <th>ACTION</th>
+
+                </tr>
+            </thead>
+            <% if(data1.length){ 
+          for(var i = 0;i < data1.length;i++) { %>
+            <tbody id="tbody">
+                <tr>
+                    <td><%=(i+1)%></td>
+                    <td><%=data1[i].issueId%></td>
+                    <td><%=data1[i].lib_no%></td>
+                    <td><%=data1[i].name%></td>
+                    <td><%=data1[i].bookId%></td>
+                    <td><%=data1[i].bookname%></td>
+                    <td><%=data1[i].issuedate%></td>
+                    <td><%=data1[i].duedate%></td>
+                    <td><form action="/returnBook" method="post">
+                        <input type="hidden" value="<%=data1[i].bookId %>" name="book" >
+                        <input type="hidden" value="<%=data1[i].issueId %>" name="id" >
+                        <input type="submit" value="Return" style="background-color:#f4511e; height:40px;border:4px solid #f4511e; border-radius:3px; box-shadow: 2px 2px 2px gray; width: 120px;" name="Remove" />
+                        </form></td>
+
+                </tr>
+
+                <% }
+      }else{ %>
+                <tr>
+                    <td align="center" colspan="9">No Books Issued</td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <h3 style="text-align: center; margin-top: 20px;">Due Books</h3>
+    <div class="d-flex table-data" style="margin-top: 20px;">
+        
+        <table class="table table-striped table-bordered table-light" >
+            <br>
+            <thead style="background-color: #f4511e;color:white;">
+                <tr>
+                    <th>S/No</th>
+                    <th>ISSUE ID</th>
+                    <th>LIB NO</th>
+                    <th>NAME</th>
+                    <th>BOOK ID</th>
+                    <th>BOOK NAME</th>
+                    <th>ISSUE DATE</th>
+                    <th>DUE DATE</th>
+                    <th>ACTION</th>
+
+                </tr>
+            </thead>
+            <% if(data2.length){ 
+          for(var i = 0;i < data2.length;i++) { %>
+            <tbody id="tbody">
+                <tr>
+                    <td><%=(i+1)%></td>
+                    <td><%=data2[i].issueId%></td>
+                    <td><%=data2[i].lib_no%></td>
+                    <td><%=data2[i].name%></td>
+                    <td><%=data2[i].bookId%></td>
+                    <td><%=data2[i].bookname%></td>
+                    <td><%=data2[i].issuedate%></td>
+                    <td><%=data2[i].duedate%></td>
+                    <td><form action="/returnBook" method="post">
+                        <input type="hidden" value="<%=data2[i].bookId %>" name="book" >
+                        <input type="hidden" value="<%= data2[i].issueId %>" name="id" />
+                        <input type="submit" value="Return" style="background-color:#f4511e; height:40px;border:4px solid #f4511e; border-radius:3px; box-shadow: 2px 2px 2px gray; width: 120px;" name="Remove" />
+                        </form></td>
+
+                </tr>
+
+                <% }
+      }else{ %>
+                <tr>
+                    <td align="center" colspan="9">No Due Books</td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+<% } %>
+
+
+
+</body>
+
+</html>
