@@ -1,9 +1,9 @@
 {
     "env": {
-        "SQL_HOST":"localhost",
+        "SQL_HOST":"library.ccv0tk8xh8l7.ap-south-1.rds.amazonaws.com",
         "SQL_PORT":"3306",
-        "SQL_USER": "root",
-        "SQL_PASSWORD": "",
+        "SQL_USER": "admin",
+        "SQL_PASSWORD": "Boss1997#",
         "SQL_DATABASE": "library",
         "HOST" : "http://localhost:4000"
     }

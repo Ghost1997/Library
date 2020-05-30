@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production SQL_HOST=localhost SQL_PORT=3306 SQL_USER=root SQL_PASSWORD= SQL_DATABASE=library HOST=http://localhost:4000 node index.js",
+    "start": "NODE_ENV=production SQL_HOST=library.ccv0tk8xh8l7.ap-south-1.rds.amazonaws.com SQL_PORT=3306 SQL_USER=admin SQL_PASSWORD=Boss1997# SQL_DATABASE=library HOST=http://localhost:4000 node index.js",
     "start-server": "node index.js",
     "start:dev": "nodemon index.js"
   },
