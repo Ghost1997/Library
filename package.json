@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production MONGO_USER=admin MONGO_PASSWORD=admin MONGO_DEFAULT_DATABASE=test HOST=http://localhost:4000 node index.js",
+    "start": "NODE_ENV=production MONGO_USER=admin MONGO_PASSWORD=admin MONGO_DEFAULT_DATABASE=test HOST=https://student-library-system.herokuapp.com node index.js",
     "start-server": "node index.js",
     "start:dev": "nodemon index.js"
   },
