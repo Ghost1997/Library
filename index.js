@@ -98,7 +98,7 @@ mongoose
     MONGODB_URI
   )
   .then(result => {
-    app.listen(4000);
+    app.listen(process.env.PORT || 4000);
   })
   .catch(err => {
     console.log(err);
