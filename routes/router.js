@@ -19,12 +19,12 @@ router.post('/get-studentById',auth, controller.getStudentById);
 router.get('/login',controller.login);
 router.post('/home',controller.postLogin,auth);
 router.get('/home',auth,controller.home);
-router.get('/message',auth,controller.message);
+
 router.get('/register',controller.getRegister);
 router.post('/register',[
     check('email').isEmail().withMessage('Please enter a valid email.')
     .custom((value, { req }) => {
-        return  user.findAll({where : {email:value}}).then(userDoc => {
+        return  user.find({email:value}).then(userDoc => {
             if (userDoc.length>0) {
               return Promise.reject(
                 'E-Mail exists already, please pick a different one.'

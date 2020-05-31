@@ -77,16 +77,6 @@ exports.postRegister = (req, res, next) => {
     });
 };
 
-
-// user.findAll({where : {email:email}}).then(userDoc => {
-//     if(userDoc.length>0){
-//       req.flash(
-//         'error',
-//         'E-Mail Already Exist, Please Enter Different Email'
-//       )
-//       return res.redirect('/register');
-//     };
-
 exports.getAddStudent = (req, res, next) => {
   let message = req.flash('error');
   if (message.length > 0) {
@@ -137,8 +127,6 @@ exports.postAddStudent = (req, res, next) => {
   if (!image) {
     return res.status(422).render('addStudent', {
       pageTitle: 'Add Student',
-      editing: false,
-      hasError: true,
       student: {
         roll: roll,
         clas: clas,
@@ -172,7 +160,7 @@ exports.postAddStudent = (req, res, next) => {
       validationErrors: errors.array()
     });
   }
-  student.findAll({ where: { lib_no: libNo } }).then(userDoc => {
+  student.find({ lib_no: libNo } ).then(userDoc => {
     if (userDoc.length > 0) {
       req.flash(
         'error',
@@ -181,7 +169,7 @@ exports.postAddStudent = (req, res, next) => {
       return res.redirect('/add-student');
     };
     const imageUrl = image.path;
-    student.create({
+    const stu = new student({
       lib_no: libNo,
       roll_no: roll,
       name: name,
@@ -190,7 +178,8 @@ exports.postAddStudent = (req, res, next) => {
       email: email,
       gender: gender,
       image: imageUrl
-    }).then(() => {
+    })
+    stu.save().then(() => {
 
       transporter.sendMail({
         to: email,
@@ -230,7 +219,7 @@ exports.postAddStudent = (req, res, next) => {
 
 
 exports.getStudentList = (req, res, next) => {
-  student.findAll().then(student => {
+  student.find().then(student => {
     res.render('getStudent', {
       data: student,
       pageTitle: 'All Students'
@@ -248,18 +237,9 @@ exports.home = (req, res, next) => {
   });
 };
 
-exports.message = (req, res, next) => {
-  res.render('message', {
-    pageTitle: 'Message',
-    path: '/message',
-    formsCSS: true,
-    product: true,
-    activeAddPerson: true
-  });
-};
 exports.getStudentByClass = (req, res, next) => {
   const clas = req.body.clas;
-  student.findAll({ where: { std: clas } }).then(student => {
+  student.find({ std: clas } ).then(student => {
     res.render('getStudent', {
       data: student,
       pageTitle: 'Student By Class',
@@ -270,7 +250,7 @@ exports.getStudentByClass = (req, res, next) => {
 
 exports.getStudentById = (req, res, next) => {
   const lib = req.body.no
-  student.findAll({ where: { lib_no: lib } }).then(student => {
+  student.find({ lib_no: lib }).then(student => {
     res.render('getStudent', {
       data: student,
       pageTitle: 'Student By Library No',
@@ -282,7 +262,7 @@ exports.getStudentById = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  user.findAll({ where: { email: email } }).then(us => {
+  user.find({ email: email }).then(us => {
     if (us.length == 0) {
       req.flash('error', 'Invalid Email or Password.');
       return res.redirect('/login');
@@ -324,16 +304,10 @@ exports.getForgot = (req, res, next) => {
   });
 };
 
-exports.getForgot = (req, res, next) => {
-  res.render('forgotpass', {
-    pageTitle: 'Forgot Password',
-    errorMessage: ''
-  });
-};
 
 exports.postForgot = (req, res, next) => {
   email = req.body.email;
-  user.findAll({ where: { email: email } }).then(users => {
+  user.find({ email: email }).then(users => {
     if (users.length == 0) {
       res.render('forgotpass', {
         pageTitle: 'Forgot Password',
@@ -358,9 +332,14 @@ exports.postForgot = (req, res, next) => {
           console.log(info);
         }
       });
-      user.update(
-        { otp: otp },
-        { where: { email: email } }
+      const us = new user({
+        _id:users[0]._id,
+        email:users[0].email,
+        password:users[0].password,
+        otp:otp
+      })
+      user.update({ email: email },us
+      
       ).then(() => {
         res.render('updatepass', {
           pageTitle: 'Update Password',
@@ -380,7 +359,7 @@ exports.postUpdatePassword = (req, res, next) => {
   const otp = req.body.otp;
   const password = req.body.password;
   const cpassword = req.body.confirmPassword;
-  user.findAll({ where: { otp: otp } }).then(users => {
+  user.find({ otp: otp } ).then(users => {
     if (users.length == 0) {
       res.render('forgotpass', {
         pageTitle: 'Forgot Password',
@@ -390,9 +369,15 @@ exports.postUpdatePassword = (req, res, next) => {
     if (users.length > 0) {
       if (password === cpassword) {
         bcrypt.hash(password, 12).then(hashedPassword => {
-
-          return user.update({ password: hashedPassword },
-            { where: { otp: otp } }).then(result => {
+          const us = new user({
+            _id:users[0]._id,
+            email:users[0].email,
+            password:hashedPassword,
+            otp:users[0].otp
+          })
+          user.update({ otp: users[0].otp },us
+          
+          ).then(result => {
               req.flash(
                 'error',
                 'Password Updated Successfully'
@@ -439,7 +424,7 @@ exports.postAddBook = (req, res, next) => {
   const qty = req.body.qty;
   const days = req.body.days;
 
-  books.findAll({ where: { bookId: id } }).then(userDoc => {
+  books.find({ bookId: id }).then(userDoc => {
     if (userDoc.length > 0) {
       res.render('addbook', {
         pageTitle: 'Add Book',
@@ -471,7 +456,7 @@ exports.postAddBook = (req, res, next) => {
       })
     }
     else {
-      books.create({
+      const book = new books({
         bookId: id,
         author: author,
         name: name,
@@ -479,7 +464,8 @@ exports.postAddBook = (req, res, next) => {
         issue_days: days,
         cost: cost,
         qty: qty
-      }).then(() => {
+      })
+      book.save().then(() => {
         res.render('addbook', {
           pageTitle: 'Add Book',
           errorMessage: 'Book Added Successfull',
@@ -500,7 +486,7 @@ exports.postAddBook = (req, res, next) => {
 }
 
 exports.getBooks = (req, res, next) => {
-  books.findAll().then(book => {
+  books.find().then(book => {
     res.render('getBooks', {
       data: book,
       pageTitle: 'All Books'
@@ -510,7 +496,7 @@ exports.getBooks = (req, res, next) => {
 };
 exports.getBookByAuthor = (req, res, next) => {
   const author = req.body.author;
-  books.findAll({ where: { author: author } }).then(book => {
+  books.find({ author: author }).then(book => {
     res.render('getBooks', {
       data: book,
       pageTitle: 'Books By Author',
@@ -519,7 +505,7 @@ exports.getBookByAuthor = (req, res, next) => {
 };
 exports.getBookByGener = (req, res, next) => {
   const gener = req.body.gener;
-  books.findAll({ where: { type: gener } }).then(book => {
+  books.find({ type: gener }).then(book => {
     res.render('getBooks', {
       data: book,
       pageTitle: 'Books By Gener',
@@ -529,7 +515,7 @@ exports.getBookByGener = (req, res, next) => {
 
 exports.getBookById = (req, res, next) => {
   const id = req.body.id
-  books.findAll({ where: { bookId: id } }).then(book => {
+  books.find({ bookId: id }).then(book => {
     res.render('getBooks', {
       data: book,
       pageTitle: 'Student By Library No',
@@ -578,7 +564,7 @@ exports.getdata = (req, res, next) => {
   }
 
   let std = {};
-  student.findAll({ where: { lib_no: libno } }).then(stu => {
+  student.find({ lib_no: libno }).then(stu => {
     if (stu.length > 0) {
       std = {
         lib_no: libno,
@@ -587,7 +573,7 @@ exports.getdata = (req, res, next) => {
     }
   }).catch(err => console.log(err));
 
-  books.findAll({ where: { bookId: bookid } }).then(book => {
+  books.find({ bookId: bookid }).then(book => {
     if (book.length > 0) {
 
       const due = new Date(issuedate);
@@ -639,7 +625,7 @@ exports.issued = (req, res, next) => {
   const author = req.body.author;
   const id = libno + bookid;
   let book = {};
-  books.findAll({ where: { bookId: bookid } }).then(issued => {
+  books.find({ bookId: bookid } ).then(issued => {
     book = {
       qty: issued[0].qty
     }
@@ -648,7 +634,7 @@ exports.issued = (req, res, next) => {
 
 
 
-  issue.findAll({ where: { issueId: id } }).then(issued => {
+  issue.find({ issueId: id }).then(issued => {
     if (issued.length > 0) {
       res.render('getdata', {
         pageTitle: 'Isuue Book',
@@ -682,7 +668,7 @@ exports.issued = (req, res, next) => {
     }
     else {
 
-      issue.create({
+      const iss = new issue({
         issueId: id,
         lib_no: libno,
         name: name,
@@ -691,10 +677,9 @@ exports.issued = (req, res, next) => {
         issuedate: issuedate,
         duedate: duedate,
         author: author
+      })
 
-
-
-      }).then(() => {
+      iss.save().then(() => {
         res.render('getdata', {
           pageTitle: 'Issue Book',
           errorMessage: 'Book Issued Successfull',
@@ -711,20 +696,21 @@ exports.issued = (req, res, next) => {
       }).catch(err => {
         console.log(err);
       });
-      books.update({
+
+      books.find({ bookId: bookid }).then(boo => {
+        const iss = new books({
+        _id:boo[0]._id,
         qty: book.qty - 1
-      },
-        {
-          where: {
-            bookId: bookid
-          }
         })
+        books.updateOne({ bookId: bookid },iss).then()
+
+      })
     }
   })
 }
 
 exports.issueHistory = (req, res, next) => {
-  issue.findAll().then(iss => {
+  issue.find().then(iss => {
     res.render('issuehistory', {
       data: iss,
       pageTitle: 'Issue History'
@@ -736,12 +722,10 @@ exports.issueHistory = (req, res, next) => {
 exports.filter = (req, res, next) => {
   const startDate = req.body.date1;
   const endDate = req.body.date2;
-  console.log(startDate + endDate);
-  issue.findAll({
-    where: {
-      issuedate: { [Op.between]: [startDate, endDate] }
-
-    }
+  issue.find({ issuedate: {
+    $gte: startDate,
+    $lte: endDate
+  }
   }).then(iss => {
     res.render('issuehistory', {
       data: iss,
@@ -765,7 +749,7 @@ exports.updatestock = (req, res, next) => {
 
 exports.searchbook = (req, res, next) => {
   bookid = req.body.bookid
-  books.findAll({ where: { bookId: bookid } }).then(book => {
+  books.find({ bookId: bookid } ).then(book => {
     if (book.length == 0) {
       res.render('updatestock', {
         condition: false,
@@ -789,12 +773,14 @@ exports.searchbook = (req, res, next) => {
 
 exports.updateqty = (req, res, next) => {
   qty = req.body.qty;
-  bookid = req.body.bookid
-
-  books.update(
-    { qty: qty },
-    { where: { bookId: bookid } }
-  ).then(() => {
+  bookid = req.body.bookid;
+  
+  books.find({ bookId: bookid }).then(boo => {
+    const iss = new books({
+    _id:boo[0]._id,
+    qty: qty
+    })
+    books.updateOne({ bookId: bookid },iss).then(() => {
     res.render('updatestock', {
       pageTitle: 'Update Stock',
       errorMessage: 'Stock Updated',
@@ -804,6 +790,7 @@ exports.updateqty = (req, res, next) => {
     });
 
   })
+})
 }
 exports.getdelete = (req, res, next) => {
   res.render('deleteStudent', {
@@ -816,11 +803,9 @@ exports.getdelete = (req, res, next) => {
 }
 exports.postdelete = (req, res, next) => {
   id = req.body.id;
-  student.destroy({
-    where: {
+  student.deleteOne({
       lib_no: id
-    }
-  }).then(() => {
+    }).then(() => {
     res.render('deleteStudent', {
       condition: false,
       value: '',
@@ -832,7 +817,7 @@ exports.postdelete = (req, res, next) => {
 }
 exports.searchstu = (req, res, next) => {
   id = req.body.stuid;
-  student.findAll({ where: { lib_no: id } }).then(stu => {
+  student.find({ lib_no: id }).then(stu => {
     if (stu.length == 0) {
       res.render('deleteStudent', {
         condition: false,
@@ -866,8 +851,7 @@ exports.getsearchStudent = (req, res, next) => {
 exports.postsearchStudent = (req, res, next) => {
   id = req.body.id;
   var todayDate = new Date().toISOString().slice(0, 10);
-  console.log(todayDate);
-  student.findAll({ where: { lib_no: id } }).then(stu => {
+  student.find({ lib_no: id }).then(stu => {
     if (stu.length == 0) {
       res.render('pofile', {
         condition: false,
@@ -877,24 +861,19 @@ exports.postsearchStudent = (req, res, next) => {
       });
     }
     else {
-      issue.findAll({
-        where: {
-          duedate: {
-            [Op.lt]: todayDate
-          }
-        }
-      }).then(issu => {
-        data2: issu
-        console.log(data2);
-      }).catch(err => console.log(err));
+      // issue.find({
+      //     duedate: {
+      //       $lt: todayDate
+      //     }
+      // }).then(issu => {
+      //   data2: issu
+      // }).catch(err => console.log(err));
 
-      issue.findAll({ where: { lib_no: id } }).then(iss => {
-        issue.findAll({
-          where: {
+      issue.find({ lib_no: id }).then(iss => {
+        issue.find({
             duedate: {
-              [Op.lt]: todayDate
+              $lt: todayDate
             }
-          }
         }).then(issu => {
         res.render('pofile', {
           condition: true,
@@ -903,7 +882,8 @@ exports.postsearchStudent = (req, res, next) => {
           errorMessage: '',
           data1: iss,
           data2:issu
-        });
+        }
+        );
         
       }).catch(err => console.log(err));
     }).catch(err => console.log(err));
@@ -918,22 +898,21 @@ exports.postReturnBook = (req, res, next) => {
   const id = req.body.id;
   const bookid = req.body.book;
   
-  books.findAll({ where: { bookId: bookid } }).then(issued => {
+  books.find({ bookId: bookid } ).then(issued => {
+    const boo = new books({
+      _id:issued[0]._id,
+      qty:issued[0].qty + 1
+    }
+      
+    )
     
   books.update({
-    qty: issued[0].qty + 1
-  },
-  {
-    where: {
       bookId: bookid
-    }
-  })
+    },boo).then()
 })
 
-issue.destroy({
-    where: {
+issue.deleteOne({
       issueId: id
-    }
   }).then(() => {
     res.render('pofile', {
         condition: false,

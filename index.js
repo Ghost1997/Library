@@ -6,7 +6,7 @@ const controller = require('./controllers/mapping');
 
 const session = require('express-session');
 
-const sequelize = require('./database/connection');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -15,6 +15,9 @@ const routes = require('./routes/router');
 const bodyParser = require('body-parser');
 
 const flash = require('connect-flash');
+
+
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 var MySQLStore = require('express-mysql-session')(session);
 
@@ -28,13 +31,9 @@ const morgan = require('morgan');
 
 const fs = require('fs');
 
-var options = {
-    host: `${process.env.SQL_HOST}`,
-    port: `${process.env.SQL_PORT}`,
-    user:  `${process.env.SQL_USER}`,
-    password: `${process.env.SQL_PASSWORD}`,
-    database: `${process.env.SQL_DATABASE}`
-};
+const MONGODB_URI =`mongodb+srv://${process.env.MONGO_USER}:${
+  process.env.MONGO_PASSWORD
+}@cluster0-jne8p.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}?retryWrites=true&w=majority`;
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -62,11 +61,15 @@ const fileStorage = multer.diskStorage({
 app.set('view engine', 'ejs');
 app.set('views','views');
 
-var sessionStore = new MySQLStore(options);
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions'
+});
+
 app.use(session({
     key: 'session_cookie_name',
     secret: 'session_cookie_secret',
-    store: sessionStore,
+    store: store,
     resave: false,
     saveUninitialized: false
 }));
@@ -89,10 +92,17 @@ app.use(express.static(path.join(__dirname,"login_data")))
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/',routes);
 app.use(controller.get404);
-sequelize.sync().then(result => {
-  app.listen(process.env.PORT || 4000);
 
-}).catch(err =>{
+mongoose
+  .connect(
+    MONGODB_URI
+  )
+  .then(result => {
+    app.listen(4000);
+  })
+  .catch(err => {
     console.log(err);
-})
+  });
+
+
 

@@ -1,70 +1,44 @@
-const sequelize = require('../database/connection');
+const mongoose = require('mongoose');
 
-const Sequelize = require('sequelize');
+const Schema = mongoose.Schema;
 
-
-const Student = sequelize.define('student', {
+const studentSchema = new Schema({
   lib_no: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true
+    type: String,
+    required: true,
+    unique:true
   },
   roll_no: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
+    type: Number,
+    required: true
   },
   name: {
-      type: Sequelize.STRING,
-      allowNull:false
-},
+    type: String,
+    required: true
+  },
   std: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   section: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   gender: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   email: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   image: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: String,
+    required: true
   }
 });
 
-module.exports = Student;
+module.exports = mongoose.model('Student', studentSchema);
 
 
-// module.exports = class Person {
-//     constructor(army_no, rank, name, company, posted) {
-//         this.army_no = army_no;
-//         this.rank = rank;
-//         this.name = name;
-//         this.company = company;
-//         this.posted = posted;
-//     }
 
-
-//     save() {
-//         return db.execute('INSERT INTO NOMINAL (army_no,rank,name,company,posted) VALUES(?,?,?,?,?)',
-//             [this.army_no, this.rank, this.name, this.company, this.posted]
-//         );
-//     }
-//     static getAllPerson() {
-//         return db.execute('SELECT * FROM NOMINAL');
-//     }
-    
-//     static getByCompany(com) {
-//         return db.execute('SELECT * FROM NOMINAL WHERE company = ?', [com])
-//     }
-//     static getByID(id) {
-//         return db.execute('SELECT * FROM NOMINAL WHERE army_no = ?', [id])
-//     }
-// }
