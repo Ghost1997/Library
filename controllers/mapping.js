@@ -187,7 +187,7 @@ exports.postAddStudent = (req, res, next) => {
         to: email,
         from: 'workmail.sujit@gmail.com',
         subject: 'Library ID is created',
-        html: `<h1>Hello! "${name}" Your Library Id is "${libNo}"</h1>`
+        html: `<h1>Hello! "${name}",</h1><h3>Its good to have you as our member. Your Library ID is "${libNo}".May we request you please note it down for your further transaction.</h3>`
       }, (err, info) => {
         if (err) {
 
