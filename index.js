@@ -89,6 +89,7 @@ app.use(
     multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
   );
 app.use(express.static(path.join(__dirname,"login_data")))
+app.use(express.static(path.join(__dirname,"home_data")))
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/',routes);
 app.use(controller.get404);
