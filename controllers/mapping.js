@@ -267,7 +267,7 @@ exports.postLogin = (req, res, next) => {
   user.find({ email: email }).then(us => {
     if (us.length == 0) {
       req.flash('error', 'Invalid Email or Password.');
-      return res.redirect('/login');
+      return res.redirect('/');
     }
     bcrypt.compare(password, us[0].password).then(doMatch => {
       if (doMatch) {
@@ -282,11 +282,11 @@ exports.postLogin = (req, res, next) => {
         });
       }
       req.flash('error', 'Invalid Email or Password.');
-      res.redirect('/login');
+      res.redirect('/');
     })
       .catch(err => {
         console.log(err);
-        res.redirect('/login');
+        res.redirect('/');
       });
   })
     .catch(err => console.log(err));
@@ -294,8 +294,8 @@ exports.postLogin = (req, res, next) => {
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
-    console.log(err);
-    res.redirect('/login');
+  
+    res.redirect('/');
   });
 };
 
@@ -328,7 +328,7 @@ exports.postForgot = (req, res, next) => {
         html: `<h1>Hello! "${name}"<h3>Your Email is "${email}" and Your OTP is "${otp}"</h3>`
       }, (err, info) => {
         if (err) {
-
+          console.log(err);
         }
         else {
           console.log(info);

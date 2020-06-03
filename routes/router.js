@@ -16,7 +16,7 @@ router.post('/add-student',auth, controller.postAddStudent);
 router.get('/get-students',auth, controller.getStudentList);
 router.post('/get-studentsByClass',auth, controller.getStudentByClass);
 router.post('/get-studentById',auth, controller.getStudentById);
-router.get('/login',controller.login);
+router.get('/',controller.login);
 router.post('/home',controller.postLogin,auth);
 router.get('/home',auth,controller.home);
 
