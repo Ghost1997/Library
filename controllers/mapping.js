@@ -9,10 +9,12 @@ const { Op } = require('sequelize');
 
 
 let transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
-    user: "smadhatpurk@gmail.com",
-    pass: "KJw68D7L"
+    user: "workmail.sujit@gmail.com",
+    pass: "7974638557"
   }
 });
 
