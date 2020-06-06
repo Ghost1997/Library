@@ -12,14 +12,22 @@ const auth =require('../operations/auth')
 const router = express.Router();
 
 router.get('/add-student',auth,controller.getAddStudent);
-router.post('/add-student',auth, controller.postAddStudent);
+
+router.post('/add-student',auth,[body('roll_no').custom((value, { req }) => {
+  if (value <0 || value>100) {
+    throw new Error('Roll No Should Be In Between [1-100]');
+  }
+  return true;
+}),
+check('name').isAlpha().withMessage('Name Can Not Contain Number')
+], controller.postAddStudent);
+
 router.get('/get-students',auth, controller.getStudentList);
 router.post('/get-studentsByClass',auth, controller.getStudentByClass);
 router.post('/get-studentById',auth, controller.getStudentById);
 router.get('/',controller.login);
 router.post('/home',controller.postLogin,auth);
 router.get('/home',auth,controller.home);
-
 router.get('/register',controller.getRegister);
 router.post('/register',[
     check('email').isEmail().withMessage('Please enter a valid email.')
@@ -31,12 +39,7 @@ router.post('/register',[
               );
             }
           });
-        }),body(
-            'password',
-            'Please enter a password with only numbers and text and at least 5 characters.'
-          )
-            .isLength({ min: 5 })
-            .isAlphanumeric(),
+        }),
           body('confirm_password').custom((value, { req }) => {
             if (value !== req.body.password) {
               throw new Error('Passwords have to match!');
@@ -50,7 +53,20 @@ router.get('/forgotPassword',controller.getForgot);
 router.post('/forgotPassword', controller.postForgot);
 router.post('/passwordUpdated' ,controller.postUpdatePassword);
 router.get('/addBook',auth,controller.getAddBook);
-router.post('/addBook',auth,controller.postAddBook);
+
+router.post('/addBook',auth,[body('bookId').custom((value, { req }) => {
+  console.log(value<0);
+  if (value < 0) {
+    console.log(value);
+    throw new Error('Book ID Can not be Negative');
+  }
+
+  return true; 
+}),
+check('name').isAlpha().withMessage('Name Can Not Contain Number'),
+check('author').isAlpha().withMessage('Author Name Can Not Contain Number')
+],controller.postAddBook);
+
 router.get('/getBooks',auth,controller.getBooks);
 router.post('/getBookByAuthor',auth,controller.getBookByAuthor);
 router.post('/getByCategory',auth,controller.getBookByGener);

@@ -1,104 +1,144 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= pageTitle %></title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>All Student</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/simple-line-icons.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/templatemo_style.css">
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light justify-content-center" style="background-color: #f4511e; height:65px; color:white;">
-        <a class="navbar-brand" style="position:absolute; left:20px;  padding:10px; border-radius:2px; box-shadow: 5px 5px 5px scarlet;" href="<%= process.env.HOST %>/home"><h4 style="color:white; font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold;">HOME</h4></a>
-        <a class="navbar-brand" style="position:absolute; right:20px;"  href="<%= process.env.HOST %>/logout"><h5 style="color:white;font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold; ">LOG OUT</h5></a>
-      <span  style="color:white; font-family: Montserrat, sans-serif;">
-        <h1 >VIEW STUDENT LIST</h1>
-      </span>
-    </nav>   
+       <header class="site-header container animated fadeInDown">
+        <div class="header-wrapper">
+            <div class="row">
+                <div class="col-md-4">
+                        <a href="<%= process.env.HOST %>/home">
+                            <h1>Library</h1>
+                        </a>
+                    </div>
+                <div class="col-md-8">
+                    <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+                        <ul class="main-menu">
+                            <li><a href="<%= process.env.HOST %>/home">Home</a></li>
+                            <li><a href="<%= process.env.HOST %>/add-student">Add
+                                    Student</a></li>
+                            <li><a href="<%= process.env.HOST %>/searchStudent">Profile</a></li>
+                            <li><a class="show-1 active" href="<%= process.env.HOST %>/get-students">Enrolled Students</a></li>
+                            <li><a href="<%= process.env.HOST %>/deleteStudent">Remove Student</a></li>
+                            <li><a href="<%= process.env.HOST %>/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </nav>
+                    <nav id="nav" class="main-navigation menu-responsive hidden-md hidden-lg">
+                        <ul class="main-menu">
+                            <li><a href="<%= process.env.HOST %>/home">Home</a></li>
+                            <li><a href="<%= process.env.HOST %>/add-student">Add Student</a></li>
+                            <li><a href="<%= process.env.HOST %>/searchStudent">Profile</a></li>
+                            <li><a class="show-1 active" href="<%= process.env.HOST %>/get-students">Enrolled Students</a></li>
+                            <li><a  href="<%= process.env.HOST %>/deleteStudent">Remove Student</a></li>
+                            <li><a href="<%= process.env.HOST %>/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="menu-1" class="homepage home-section container">
+        <div class="home-intro text-center">
+            <h2 class="animated fadeInLeft">All Student</h2>  
+        </div>
+    </div>
     <div class="container text-center">
-            <!-- <h1 class="py-4 bg-danger text-light rounded">View Nominal List</h1> -->
-            <div class="container" style="margin-top:17px;">
-            <div class="card bg-light" >
-            <div class="d-flex justify-content-center" >
+        <div class="container">
+        <div class="card bg-light" >
+        <div  style="margin-left: 230px;" >
+
     
-        
-    <form style="padding : 10px; margin-left: 20px;" action="/get-studentsByClass" method="post">
-            <button type="submit" class="btn btn-primary btn-block " style="background-color: #f4511e; border: 2px solid #f4511e;" name="byCompany">Students By CLass</button>
-            <br>
-            <select required name="clas" class="custom-select">
-                <option disabled selected value>Class</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                
-            </select>
-            
-        
-    </form>
-    <br>
-    <br>
-    <form style="padding : 10px; margin-left: 20px;" action="/get-studentById" method="post">
-    <button type="submit" class="btn btn-primary btn-block " style="background-color: #f4511e;  border: 2px solid #f4511e;" name="search">Search Student</button>
-    <br>
-    <input  name="no" placeholder="Library No" type="text" class="form-control"/>	
-    </form>
-    <br>
-    <br>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                            <div class="d-flex table-data">
-    
-    <table class="table table-striped table-bordered table-light" >
+<form class="col-md-4"action="/get-studentsByClass" method="post">
+        <button type="submit" class="btn btn-primary btn-block " name="byCompany">Students By CLass</button>
         <br>
-           <thead  style="background-color: #f4511e;color:white;">
-        <tr>
-            <th>S/No</th>
-            <th>LIBRARY NO</th>
-            <th>ROLL NO</th>
-            <th>NAME</th>
-            <th>CLASS</th>
-            <th>SECTION</th>
-            <th>GENDER</th>
-            <th>EMAIL</th>
+        <select required name="clas" class="form-control">
+            <option disabled selected value>Class</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
             
-        </tr>
-    </thead>
-      <% if(data.length){ 
-          for(var i = 0;i < data.length;i++) { %>
-            <tbody id="tbody">
-      <tr>
-        <td><%=(i+1)%></td>
-        <td><%=data[i].lib_no%></td>
-        <td><%=data[i].roll_no%></td>
-        <td><%=data[i].name%></td>
-        <td><%=data[i].std%></td>
-        <td><%=data[i].section%></td>
-        <td><%=data[i].gender%></td>
-        <td><%=data[i].email%></td>
+        </select>
         
-      </tr>
-      
-      <% }
-      }else{ %>
-      <tr>
-        <td align="center" colspan="8">No Student Found</td>
-      </tr>
-    <% } %>
+    
+</form>
+<form class="col-md-4"  action="/get-studentById" method="post">
+<button type="submit" class="btn btn-primary btn-block " name="search">Search Student</button>
+<br>
+<input  name="no" placeholder="Library No" type="text" class="form-control"/>	
+</form>
+<br>
+<br>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="d-flex table-data">
+
+<table class="table table-striped table-bordered table-light" >
+    <br>
+       <thead  style="color:white; ">
+    <tr>
+        <th>S/No</th>
+        <th>LIBRARY NO</th>
+        <th>ROLL NO</th>
+        <th>NAME</th>
+        <th>CLASS</th>
+        <th>SECTION</th>
+        <th>GENDER</th>
+        <th>EMAIL</th>
+        
+    </tr>
+</thead>
+  <% if(data.length){ 
+      for(var i = 0;i < data.length;i++) { %>
+        <tbody id="tbody" style="color: black;">
+  <tr>
+    <td><%=(i+1)%></td>
+    <td><%=data[i].lib_no%></td>
+    <td><%=data[i].roll_no%></td>
+    <td><%=data[i].name%></td>
+    <td><%=data[i].std%></td>
+    <td><%=data[i].section%></td>
+    <td><%=data[i].gender%></td>
+    <td><%=data[i].email%></td>
+    
+  </tr>
+  
+  <% }
+  }else{ %>
+  <tr>
+    <td align="center" colspan="8">No Student Found</td>
+  </tr>
+<% } %>
 </tbody>
 </table>
 </div>
-    </body>
+    
+            <span class="border-top"></span>
+            <span class="border-left"></span>
+            <span class="border-right"></span>
+            <span class="border-bottom"></span>
+            <span class="shape-1"></span>
+            <span class="shape-2"></span>
+
+            <script src="js/jquery.min.js"></script>
+            <script src="js/templatemo_custom.js"></script>
+</body>
+
 </html>

@@ -1,133 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <title><%= pageTitle %></title>
-    <meta charset="UTF-8">
-    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Add Student</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/simple-line-icons.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/templatemo_style.css">
+    <style>
+    .center {
+    position: absolute;
+    top:65%;
+    bottom: 0;
+    left: 17%;
+    right: 0; 
+    margin: auto;
+    }
+    </style>
 </head>
 <body>
     <% if (errorMessage) { %>
 		<div class="alert alert-warning" style="text-align: center; width: auto;"><%= errorMessage %></div>
 	<% } %>
-    <nav class="navbar navbar-expand-sm navbar-light justify-content-center" style="background-color: #f4511e; height:65px; color:white;">
-        <a class="navbar-brand" style="position:absolute; left:20px;  padding:10px; border-radius: 2px ; box-shadow: 5px 5px 5px scarlet;" href="<%= process.env.HOST %>/home">
-            <h4 style="color:white; font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold;">
-                HOME
-            </h4>
-        </a>
-        <a class="navbar-brand" style="position:absolute; right:20px;" href="<%= process.env.HOST %>/logout">
-            <h5 style="color:white;font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold; ">LOGOUT</h5>
-        </a>
-        <span style="color:white; font-family: Montserrat, sans-serif;">
-            <h1>ADD NEW STUDENT</h1>
-        </span>
-    </nav>
-
-    <main>
-        <div class="container text-center" style="margin-top:20px; width: 600px;">
-            <div class="container">
-                <div class="card bg-light">
-                    <article class="card-body mx-auto" style="max-width: 300px;">
-                        <form action="/add-student" method="post" enctype="multipart/form-data">
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-id-card"></i></span>
-                                </div>
-                                <input name="roll_no" class="form-control" value="<%= student.roll %>" placeholder="Roll No" type="number" required>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
-                                </div>
-                                <input name="name" class="form-control" value="<%= student.name %>" placeholder="Name" type="text"  required>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fas fa-angle-double-up"></i> </span>
-                                </div>
-                                <select  value="<%= student.clas %>"name="class" class="custom-select" required>
-                                    <option disabled selected value>Class</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>
-                                </select>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fas fa-users"></i></i> </span>
-                                </div>
-                                <select name="section" value="<%= student.section %>" class="custom-select" required>
-                                    <option disabled selected value>Section</option>
-                                    <option>A</option>
-                                    <option>B</option>
-                                    <option>C</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
-                                </div>
-                                <select name="gender" value="<%= student.gender %>" class="form-control" required>
-                                    <option disabled selected value>Gender</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                </div>
-                                <input name="email" class="form-control" value="<%= student.email %>" placeholder="Email" type="email" required>
-                            </div>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text" >Image</span>
-                                </div>
-                                <div class="custom-file">
-                                  <input type="file" class="custom-file-input"  name="image" id="image" required>
-                                  
-                                  <label class="custom-file-label"  style="text-align: left;">Choose file</label> 
-                                </div>
-                              </div>
-                            <div class="form-group input-group">
-                            </div>
-                            <div class="form-group" style="background-color:#f4511e;">
-                                <button type="submit" class="btn btn-primary btn-block " name="create" style="background-color: #f4511e; border: 2px solid #f4511e;">Submit</button>
-                            </div>
-                            <div class="d-flex justify-content-center ">
-                            </div>
-                            <div>
-                        </form>
-
-                    </article>
+    <header class="site-header container animated fadeInDown">
+        <div class="header-wrapper">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="site-branding">
+                        <a href="<%= process.env.HOST %>/home">
+                            <h1>Library</h1>
+                        </a>
+                    </div>
+                </div>
+                <a href="#" class="toggle-nav hidden-md hidden-lg">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="col-md-8">
+                    <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+                        <ul class="main-menu">
+                            <li><a href="<%= process.env.HOST %>/home">Home</a></li>
+                            <li><a class="show-1 active homebutton" href="<%= process.env.HOST %>/add-student">Add Student</a></li>
+                            <li><a href="<%= process.env.HOST %>/searchStudent">Profile</a></li>
+                            <li><a href="<%= process.env.HOST %>/get-students">Enrolled Students</a></li>
+                            <li><a href="<%= process.env.HOST %>/deleteStudent">Remove Student</a></li>
+                            <li><a href="<%= process.env.HOST %>/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </nav>
+                    <nav id="nav" class="main-navigation menu-responsive hidden-md hidden-lg">
+                        <ul class="main-menu">
+                            <li><a href="<%= process.env.HOST %>/home">Home</a></li>
+                            <li><a class="show-1 active homebutton" href="<%= process.env.HOST %>/add-student">Add Student</a></li>
+                            <li><a href="<%= process.env.HOST %>/searchStudent">Profile</a></li>
+                            <li><a href="<%= process.env.HOST %>/get-students">Enrolled Students</a></li>
+                            <li><a href="<%= process.env.HOST %>/deleteStudent">Remove Student</a></li>
+                            <li><a href="<%= process.env.HOST %>/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-    </main>
-    </div>
-    <br>
-    <div class="d-flex justify-content-center ">
-    <a href="<%= process.env.HOST %>/get-students" style="text-decoration: none;"><button type="button" class="btn btn-primary btn-block " name="getstudents" style="background-color: #f4511e;  width: 200px; border: 2px solid #f4511e;">View All Students</button></a>
-</div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+        </div>
+    </header>
 
+
+    <div id="menu-1" class="homepage home-section container">
+        <div class="home-intro text-center">
+            <h2 class="animated fadeInLeft" style="text-align: center;">Add Student</h2>  
+        </div>
+    </div>
+    <main><div class="col-md-5 col-sm-7 center">
+        <form action="/add-student" method="post" enctype="multipart/form-data">
+                
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="name">Name:</label>
+                <input name="name" id="name" class="form-control" value="<%= student.name %>" placeholder="Name" type="text" required>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7" >
+                <label for="roll">Roll No:</label>
+                <input type="text" id="roll" value="<%= student.roll %>" class="form-control" name="roll_no" placeholder="Roll No [0-100]">
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="gender">Gender:</label>
+                <select id="gender"class="form-control" name="gender" value="<%= student.gender %>"required>
+                    <option disabled selected value>Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="class">Class:</label>
+                <select id="class"class="form-control" value="<%= student.clas %>" name="class"required>
+                    <option disabled selected value>Class</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                </select>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="sec">Section:</label>
+                <select id="sec" class="form-control" name="section" value="<%= student.section %>"
+                    class="custom-select" required>
+                    <option disabled selected value>Section</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                </select>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="email">Email:</label>
+                <input id="email" class="form-control" name="email" value="<%= student.email %>"placeholder="Email" type="email" required>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="image">Image:</label>
+                <input  class="form-control" type="file" name="image" id="image" required>
+            </fieldset>
+            
+            <fieldset class="col-md-7 col-sm-7">
+                <br>
+                <button type="submit" class="btn btn-primary btn-block " name="create" >Submit</button>
+                <br>
+                <br>
+            </fieldset>
+        </form>  
+        </div>   
+</main>
+    
+            <span class="border-top"></span>
+            <span class="border-left"></span>
+            <span class="border-right"></span>
+            <span class="border-bottom"></span>
+            <span class="shape-1"></span>
+            <span class="shape-2"></span>
+
+            <script src="js/jquery.min.js"></script>
+            <script src="js/templatemo_custom.js"></script>
 </body>
+
 </html>

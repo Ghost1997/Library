@@ -187,7 +187,7 @@ exports.postAddStudent = (req, res, next) => {
         to: email,
         from: 'workmail.sujit@gmail.com',
         subject: 'Library ID is created',
-        html: `<h1>Hello! "${name}",</h1><h3>Its good to have you as our member. Your Library ID is "${libNo}".May we request you please note it down for your further transaction.</h3> `
+        html: `<h2>Hello! ${name},</h2><h3>Its good to have you as our member. Your Library ID is "${libNo}".May we request you please note it down for your further transaction.</h3> <br><br><br><br><p>Regards,<br/>Team Admin</p>`
       }, (err, info) => {
         if (err) {
           console.log(err);
@@ -273,8 +273,7 @@ exports.postLogin = (req, res, next) => {
       if (doMatch) {
         req.session.isLoggedIn = true;
         req.session.us = us;
-        return req.session.save(err => {
-          console.log(err);
+        return req.session.save(() => {
           res.render('home', {
             pageTitle: 'Home ',
             path: '/home'
@@ -442,6 +441,26 @@ exports.postAddBook = (req, res, next) => {
         }
       })
     }
+    const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    //console.log(errors.array());
+    return res.status(422).render('addbook', {
+      pageTitle: 'Add Book',
+      editing: false,
+      hasError: true,
+      book: {
+        bookId: id,
+        author: author,
+        name: name,
+        type: type,
+        issue_days: days,
+        cost: cost,
+        qty: qty
+      },
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array()
+    });
+  }
     else if (qty <= 0 || cost <= 0 || days <= 0) {
       res.render('addbook', {
         pageTitle: 'Add Book',
@@ -551,7 +570,6 @@ exports.getdata = (req, res, next) => {
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
       year = d.getFullYear();
-
     if (month.length < 2)
       month = '0' + month;
     if (day.length < 2)
@@ -572,34 +590,49 @@ exports.getdata = (req, res, next) => {
         lib_no: libno,
         name: stu[0].name,
       }
-    }
-  }).catch(err => console.log(err));
-
-  books.find({ bookId: bookid }).then(book => {
-    if (book.length > 0) {
-
-      const due = new Date(issuedate);
-      const days = book[0].issue_days;
-      const newdate = formatDate((due.addDays(days)));
-      res.render('issue', {
-        data: book,
-        pageTitle: 'Issue Books',
-        errorMessage: '',
-        issue: {
-
-          lib_no: std.lib_no,
-          name: std.name,
-          bookid: bookid,
-          bookname: book[0].name,
-          author: book[0].author,
-          issuedate: issuedate,
-          duedate: newdate
+      books.find({ bookId: bookid }).then(book => {
+        if (book.length > 0) {
+    
+          const due = new Date(issuedate);
+          const days = book[0].issue_days;
+          const newdate = formatDate((due.addDays(days)));
+          res.render('issue', {
+            data: book,
+            pageTitle: 'Issue Books',
+            errorMessage: '',
+            issue: {
+    
+              lib_no: std.lib_no,
+              name: std.name,
+              bookid: bookid,
+              bookname: book[0].name,
+              author: book[0].author,
+              issuedate: issuedate,
+              duedate: newdate
+            }
+          });
         }
-      });
+        else {
+          res.render('getdata', {
+            data: book,
+            pageTitle: 'Issue Books',
+            errorMessage: 'Invalid Book ID or Student ID',
+            issue: {
+              bookid: '',
+              lib_no: '',
+              name: '',
+              bookname: '',
+              issuedate: '',
+              duedate: '',
+              author: ''
+            }
+          })
+        }
+      }).catch(err => console.log(err));
     }
     else {
       res.render('getdata', {
-        data: book,
+        data: [],
         pageTitle: 'Issue Books',
         errorMessage: 'Invalid Book ID or Student ID',
         issue: {
@@ -613,7 +646,10 @@ exports.getdata = (req, res, next) => {
         }
       })
     }
+
   }).catch(err => console.log(err));
+
+  
 
 };
 
@@ -631,6 +667,7 @@ exports.issued = (req, res, next) => {
     book = {
       qty: issued[0].qty
     }
+
 
   })
 
@@ -650,6 +687,7 @@ exports.issued = (req, res, next) => {
           duedate: duedate,
           author: author
         }
+
       })
     }
 
@@ -680,7 +718,6 @@ exports.issued = (req, res, next) => {
         duedate: duedate,
         author: author
       })
-
       iss.save().then(() => {
         res.render('getdata', {
           pageTitle: 'Issue Book',

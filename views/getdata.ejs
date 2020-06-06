@@ -1,129 +1,125 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <title><%= pageTitle %></title>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Issue Book</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/simple-line-icons.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/templatemo_style.css">
+    <style>
+    
+        .center {
+    
+    position: absolute;
+    top:65%;
+    bottom: 0;
+    left: 17%;
+    right: 0;
+      
+    margin: auto;
+    }
+    </style>
 </head>
 
 <body>
     <% if (errorMessage) { %>
-    <div class="alert alert-warning" style="text-align: center; width: auto;"><%= errorMessage %></div>
-    <% } %>
-    <nav class="navbar navbar-expand-sm navbar-light justify-content-center"
-        style="background-color: #f4511e; height:65px; color:white;">
-        <a class="navbar-brand"
-            style="position:absolute; left:20px;  padding:10px; border-radius: 2px ; box-shadow: 5px 5px 5px scarlet;"
-            href="<%= process.env.HOST %>/home">
-            <h4 style="color:white; font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold;">
-                HOME
-            </h4>
-        </a>
-        <a class="navbar-brand" style="position:absolute; right:20px;" href="<%= process.env.HOST %>/logout">
-            <h5 style="color:white;font-family: Montserrat, sans-serif;text-shadow: 2px 2px gray; font-weight:bold; ">
-                LOGOUT</h5>
-        </a>
-        <span style="color:white; font-family: Montserrat, sans-serif;">
-            <h1>ISSUE BOOK</h1>
-        </span>
-    </nav>
-
-    <main>
-        <div class="container text-center" style="margin-top:20px; width: 600px;">
-            <div class="container">
-                <div class="card bg-light">
-                    <article class="card-body mx-auto" style="max-width: 300px;">
-                        <form action="/getdata" method="post" enctype="multipart/form-data">
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-id-card"></i></span>
-                                </div>
-                                <input name="lib_no" class="form-control" value="<%= issue.lib_no %>"
-                                    placeholder="Lib No" type="text" required>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-id-card"></i></span>
-                                </div>
-                                <input name="name" class="form-control" value="<%= issue.name %>" placeholder="name"
-                                    type="text" disabled required>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-id-card"></i></span>
-                                </div>
-                                <input name="bookId" class="form-control" value="<%= issue.bookid %>"
-                                    placeholder="Book ID" type="text" required>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-book"></i></span>
-                                </div>
-                                <input name="bookname" class="form-control" value="<%= issue.bookname %>"
-                                    placeholder="Book Name" type="text" disabled required>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
-                                </div>
-                                <input name="author" class="form-control" value="<%= issue.author %>"
-                                    placeholder="Author" type="text" disabled required>
-                            </div>
-
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fab fa-quora"></i></span>
-                                </div>
-                                <input name="issuedate" class="form-control" value="<%= issue.issuedate %>"
-                                    placeholder="issuedate" type="date" required>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                                <input name="duedate" class="form-control" value="<%= issue.duedate %>"
-                                    placeholder="Due Date" type="date" disabled required>
-                            </div>
-
-                            <div class="form-group" style="background-color:#f4511e;">
-                                <button type="submit" class="btn btn-primary btn-block " name="getdata"
-                                    style="background-color: #f4511e; border: 2px solid #f4511e;">Get Data</button>
-                            </div>
-                            <div class="d-flex justify-content-center ">
-                            </div>
-                            <div>
-                                <br>
-                                <div class="d-flex justify-content-center ">
-                                    <button type="submit" class="btn btn-primary btn-block " formaction="/issued"
-                                        name="Issue"
-                                        style="background-color: #f4511e;  width: 200px; border: 2px solid #f4511e;">Issue</button>
-                                </div>
-                        </form>
-
-                    </article>
+        <div class="alert alert-warning" style="text-align: center; width: auto;"><%= errorMessage %></div>
+        <% } %>
+       <header class="site-header container animated fadeInDown">
+        <div class="header-wrapper">
+            <div class="row">
+                <div class="col-md-4">
+                        <a href="<%= process.env.HOST %>/home">
+                            <h1>Library</h1>
+                        </a>
+                    </div>
+                <div class="col-md-8">
+                    <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+                        <ul class="main-menu">
+                            <li><a href="<%= process.env.HOST %>/home">Home</a></li>
+                            <li><a class="show-1 active" href="<%= process.env.HOST %>/issue">Issue Book</a></li>
+                            <li><a href="<%= process.env.HOST %>/issueHistory">Issue History</a></li>
+                            <li><a href="<%= process.env.HOST %>/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+                            
+                        
+                        </ul>
+                    </nav>
+                    <nav id="nav" class="main-navigation menu-responsive hidden-md hidden-lg">
+                        <ul class="main-menu">
+                            <li><a href="<%= process.env.HOST %>/home">Home</a></li>
+                            <li><a  class="show-1 active" href="<%= process.env.HOST %>/issue">Issue Book</a></li>
+                            <li><a href="<%= process.env.HOST %>/issueHistory">Issue History</a></li>
+                            <li><a href="<%= process.env.HOST %>/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-    </main>
+        </div>
+    </header>
+    <div id="menu-1" class="homepage home-section container">
+        <div class="home-intro text-center">
+            <h2 class="animated fadeInLeft" style="text-align: center;">Issue Book</h2>
+        </div>
     </div>
+    <main><div class="col-md-5 col-sm-7 center">
+        <form action="/getdata" method="post" enctype="multipart/form-data">
+                
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="lib">Library No:</label>
+                <input id="lib" name="lib_no" class="form-control" value="<%= issue.lib_no %>"
+                                    placeholder="Lib No" type="text" required>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7" >
+                <label for="name">Name:</label>
+                <input name="name" id="name" class="form-control" value="<%= issue.name %>" placeholder="Name"
+                                    type="text" disabled required>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="bookid">Book Id:</label>
+                <input name="bookId" id="bookid"class="form-control" value="<%= issue.bookid %>"
+                                    placeholder="Book ID" type="text" required>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="bname">Book Name:</label>
+                <input name="bookname" id="bname" class="form-control" value="<%= issue.bookname %>"
+                                    placeholder="Book Name" type="text" disabled required>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="author">Author:</label>
+                <input name="author" class="form-control" id="author" value="<%= issue.author %>"
+                                    placeholder="Author" type="text" disabled required>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="idate">Issue Date:</label>
+                <input id="idate"name="issuedate" class="form-control" value="<%= issue.issuedate %>"
+                                    placeholder="issuedate" type="date" required>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+                <label for="ddate">Due Date:</label>
+                <input name="duedate" class="form-control" id="ddate" value="<%= issue.duedate %>"
+                                    placeholder="Due Date" type="date" disabled required>
+            </fieldset>
+            
+            <fieldset class="col-md-6 col-sm-7">
+                <br>
+                <button type="submit" style="margin-left: 10%;" class="btn btn-primary btn-block " name="create" >Get Data</button>
+                <br>
+            </fieldset>
+            <fieldset class="col-md-7 col-sm-7">
+            <button type="submit" class="btn btn-primary btn-block " formaction="/issued"
+                                        name="Issue">Issue</button>
+                                        <br>
+                                        <br>
+                                        </fieldset>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+            
+        </form>
+        </div>
 
-</body>
-
-</html>
+    
+</main>
