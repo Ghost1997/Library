@@ -197,7 +197,7 @@ exports.postAddStudent = (req, res, next) => {
       });
       res.render('addStudent', {
         pageTitle: 'Add Student',
-        errorMessage: 'Student Added Successfull',
+        errorMessage: 'Student Added Successfull Please Check Your Email',
         student: {
           roll: "",
           clas: "",
