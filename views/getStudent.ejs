@@ -14,14 +14,19 @@
 </head>
 
 <body>
-       <header class="site-header container animated fadeInDown">
+    <header class="site-header container animated fadeInDown">
         <div class="header-wrapper">
             <div class="row">
                 <div class="col-md-4">
+                    <div class="site-branding">
                         <a href="<%= process.env.HOST %>/home">
                             <h1>Library</h1>
                         </a>
                     </div>
+                </div>
+                <a href="#" class="toggle-nav hidden-md hidden-lg">
+                    <i class="fa fa-bars"></i>
+                </a>
                 <div class="col-md-8">
                     <nav id="nav" class="main-navigation hidden-xs hidden-sm">
                         <ul class="main-menu">
@@ -56,12 +61,9 @@
     <div class="container text-center">
         <div class="container">
         <div class="card bg-light" >
-        <div  style="margin-left: 230px;" >
-
-    
-<form class="col-md-4"action="/get-studentsByClass" method="post">
-        <button type="submit" class="btn btn-primary btn-block " name="byCompany">Students By CLass</button>
-        <br>
+        <div class="col-md-10 col-sm-10 center" style="margin-left: 20%;" >
+            <fieldset class="col-md-4 col-sm-8 col-xs-20">
+<form action="/get-studentsByClass" method="post">
         <select required name="clas" class="form-control">
             <option disabled selected value>Class</option>
             <option>5</option>
@@ -74,14 +76,21 @@
             <option>12</option>
             
         </select>
-        
+        <br>
+        <button type="submit" class="btn btn-primary btn-block " name="byCompany">Students By CLass</button>
+        <br>
     
 </form>
-<form class="col-md-4"  action="/get-studentById" method="post">
-<button type="submit" class="btn btn-primary btn-block " name="search">Search Student</button>
-<br>
+</fieldset>
+<fieldset class="col-md-4 col-sm-8 col-xs-20">
+<form  action="/get-studentById" method="post">
+
+
 <input  name="no" placeholder="Library No" type="text" class="form-control"/>	
+<br>
+<button type="submit" class="btn btn-primary btn-block " name="search">Search Student</button>
 </form>
+</fieldset>
 <br>
 <br>
                         </div>

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <meta name="viewport" content="width=device-width; maximum-scale=1; minimum-scale=1;">
     <title>Student Profile</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -13,16 +13,28 @@
     <link rel="stylesheet" href="css/templatemo_style.css">
 </head>
 <style>
-    
     .center {
 
 position: absolute;
-top:110%;
+top:55%;
 bottom: 0%;
 left: 0;
 right: 0;
   
 margin: auto;
+}
+.center1 {
+
+position: absolute;
+top:75%;
+bottom: 0%;
+left: 0;
+right: 0;
+  
+margin: auto;
+}
+.issue {
+    text-align: center; margin-top: 200px;
 }
 </style>
 
@@ -30,14 +42,19 @@ margin: auto;
     <% if (errorMessage) { %>
 		<div class="alert alert-warning" style="text-align: center; width: auto;"><%= errorMessage %></div>
 	<% } %>
-       <header class="site-header container animated fadeInDown">
+    <header class="site-header container animated fadeInDown">
         <div class="header-wrapper">
             <div class="row">
                 <div class="col-md-4">
+                    <div class="site-branding">
                         <a href="<%= process.env.HOST %>/home">
                             <h1>Library</h1>
                         </a>
                     </div>
+                </div>
+                <a href="#" class="toggle-nav hidden-md hidden-lg">
+                    <i class="fa fa-bars"></i>
+                </a>
                 <div class="col-md-8">
                     <nav id="nav" class="main-navigation hidden-xs hidden-sm">
                         <ul class="main-menu">
@@ -69,7 +86,8 @@ margin: auto;
             <h2 class="animated fadeInLeft">Student profile</h2>  
         </div>
     </div>
-    <div class="container text-center">
+
+    <div class="container text-center center">
         <div>
             <form action="/searchStudent" method="post">
      
@@ -82,10 +100,10 @@ margin: auto;
         <% if(condition){%>
             <div class="container wrap"  >
                 <div class="row">
-                    <div style="border: 1px solid red; height: 230px; width: 450px; " class="center"  >
+                    <div style="border: 1px solid red; height: 230px; width: 450px; " class="center1"  >
                         <div >
                             <div class="row">
-                                <div style="margin-left: 30px; margin-top: 15px;">
+                                <div style="margin-left: 30px; margin-top: 3%;">
                                     <img width="150" height="200"src="/<%= data[0].image %>" alt="" class="img-rounded img-responsive" />
                                 </div>
                                 <div style="margin-left: 50%; margin-top: -40%;">
@@ -113,7 +131,7 @@ margin: auto;
             <br>
             <br>
             <br>
-            <h3 style="text-align: center; margin-top: 230px;">Issued Books</h3>
+            <h3 class="issue">Issued Books</h3>
             <div class="d-flex table-data" style="margin-top: 20px;">
                 
                 <table class="table table-striped table-bordered table-light" >

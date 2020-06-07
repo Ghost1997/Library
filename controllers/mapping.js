@@ -72,7 +72,7 @@ exports.postRegister = (req, res, next) => {
         'error',
         'User Created Successfully'
       )
-      res.redirect('/login');
+      res.redirect('<%= process.env.HOST %>/');
     })
     .catch(err => {
       console.log(err);
@@ -110,7 +110,6 @@ exports.login = (req, res, next) => {
     message = null;
   }
   res.render('login1', {
-    path: '/login',
     pageTitle: 'Login',
     errorMessage: message
   });
@@ -379,11 +378,11 @@ exports.postUpdatePassword = (req, res, next) => {
           user.update({ otp: users[0].otp },us
           
           ).then(result => {
-              req.flash(
-                'error',
-                'Password Updated Successfully'
-              )
-              res.redirect('/login');
+            res.render('login1', {
+              pageTitle: 'Login',
+              errorMessage: 'Password Updated Sucessfully'
+            });
+              
             })
             .catch(err => {
               console.log(err);
