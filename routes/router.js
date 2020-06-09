@@ -19,7 +19,7 @@ router.post('/add-student',auth,[body('roll_no').custom((value, { req }) => {
   }
   return true;
 }),
-check('name').isAlpha().withMessage('Name Can Not Contain Number')
+check('name').isAlphanumeric.withMessage('Name Can Only Contain Alphabets and Numbers')
 ], controller.postAddStudent);
 
 router.get('/get-students',auth, controller.getStudentList);
@@ -63,8 +63,8 @@ router.post('/addBook',auth,[body('bookId').custom((value, { req }) => {
 
   return true; 
 }),
-check('name').isAlpha().withMessage('Name Can Not Contain Number'),
-check('author').isAlpha().withMessage('Author Name Can Not Contain Number')
+check('name').isAlphanumeric.withMessage('Name Can Only Contain Alphabets and Numbers'),
+check('author').isAlphanumeric.withMessage('Author Name Can Only Contain Alphabets and Numbers')
 ],controller.postAddBook);
 
 router.get('/getBooks',auth,controller.getBooks);
