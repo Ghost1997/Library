@@ -749,7 +749,7 @@ exports.issued = (req, res, next) => {
 
 exports.issueHistory = (req, res, next) => {
   issue.find().then(iss => {
-    res.render('issuehistory', {
+    res.render('issueHistory', {
       data: iss,
       pageTitle: 'Issue History'
     });
