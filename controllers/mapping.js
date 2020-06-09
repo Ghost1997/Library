@@ -765,7 +765,7 @@ exports.filter = (req, res, next) => {
     $lte: endDate
   }
   }).then(iss => {
-    res.render('issuehistory', {
+    res.render('issueHistory', {
       data: iss,
       pageTitle: 'Issue History'
     });
