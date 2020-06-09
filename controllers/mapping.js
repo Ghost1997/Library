@@ -68,11 +68,15 @@ exports.postRegister = (req, res, next) => {
       return us.save();
     })
     .then(result => {
-      req.flash(
-        'error',
-        'User Created Successfully'
-      )
-      res.redirect('<%= process.env.HOST %>/');
+      // req.flash(
+      //   'error',
+      //   'User Created Successfully'
+      // )
+      // res.redirect('<%= process.env.HOST %>/');
+      res.render('login1', {
+        pageTitle:'Login',
+        errorMessage: 'User Created Successfully'
+      });
     })
     .catch(err => {
       console.log(err);
