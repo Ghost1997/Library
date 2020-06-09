@@ -908,10 +908,7 @@ exports.postsearchStudent = (req, res, next) => {
       // }).catch(err => console.log(err));
 
       issue.find({ lib_no: id }).then(iss => {
-        issue.find({
-            duedate: {
-              $lt: todayDate
-            }
+        issue.find({$and:[{lib_no: id},{duedate: {$lt: todayDate}}]
         }).then(issu => {
         res.render('pofile', {
           condition: true,
