@@ -1,155 +1,233 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimal-ui"
+    />
     <title>Add Books</title>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/simple-line-icons.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/templatemo_style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/simple-line-icons.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="css/templatemo_style.css" />
     <style>
-    
-        .center {
-    
-    position: absolute;
-    top:65%;
-    bottom: 0;
-    left: 17%;
-    right: 0;
-      
-    margin: auto;
-    }
-    </style>
-</head>
+      .center {
+        position: absolute;
+        top: 65%;
+        bottom: 0;
+        left: 17%;
+        right: 0;
 
-<body>
+        margin: auto;
+      }
+    </style>
+  </head>
+
+  <body>
     <% if (errorMessage) { %>
-		<div class="alert alert-warning" style="text-align: center; width: auto;"><%= errorMessage %></div>
-	<% } %>
-       <header class="site-header container animated fadeInDown">
-        <div class="header-wrapper">
-            <div class="row">
-                <div class="col-md-4">
-                        <a href="<%= process.env.HOST %>/home">
-                            <h1>Library</h1>
-                        </a>
-                    </div>
-                <div class="col-md-8">
-                    <nav id="nav" class="main-navigation hidden-xs hidden-sm">
-                        <ul class="main-menu">
-                            <li><a href="<%= process.env.HOST %>/home">Home</a></li>
-                            <li><a class="show-1 active" href="<%= process.env.HOST %>/addBook">Add Book</a></li>
-                            <li><a href="<%= process.env.HOST %>/getBooks">All Book</a></li>
-                            <li><a  href="<%= process.env.HOST %>/update">Update Stock</a></li>
-                            <li><a href="<%= process.env.HOST %>/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav id="nav" class="main-navigation menu-responsive hidden-md hidden-lg">
-                        <ul class="main-menu">
-                            <li><a href="<%= process.env.HOST %>/home">Home</a></li>
-                            <li><a class="show-1 active" href="<%= process.env.HOST %>/addBook">Add Book</a></li>
-                            <li><a href="<%= process.env.HOST %>/getBooks">All Book</a></li>
-                            <li><a  href="<%= process.env.HOST %>/update">Update Stock</a></li>
-                            <li><a href="<%= process.env.HOST %>/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
-                            
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+    <div class="alert alert-warning" style="text-align: center; width: auto;">
+      <%= errorMessage %>
+    </div>
+    <% } %>
+    <header class="site-header container animated fadeInDown">
+      <div class="header-wrapper">
+        <div class="row">
+          <div class="col-md-4">
+            <a href="<%= process.env.HOST %>/home">
+              <h1>Library</h1>
+            </a>
+          </div>
+          <div class="col-md-8">
+            <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+              <ul class="main-menu">
+                <li><a href="<%= process.env.HOST %>/home">Home</a></li>
+                <li>
+                  <a
+                    class="show-1 active"
+                    href="<%= process.env.HOST %>/addBook"
+                    >Add Book</a
+                  >
+                </li>
+                <li><a href="<%= process.env.HOST %>/getBooks">All Book</a></li>
+                <li>
+                  <a href="<%= process.env.HOST %>/update">Update Stock</a>
+                </li>
+                <li>
+                  <a href="<%= process.env.HOST %>/logout"
+                    ><i class="fa fa-power-off" aria-hidden="true"></i
+                  ></a>
+                </li>
+              </ul>
+            </nav>
+            <nav
+              id="nav"
+              class="main-navigation menu-responsive hidden-md hidden-lg"
+            >
+              <ul class="main-menu">
+                <li><a href="<%= process.env.HOST %>/home">Home</a></li>
+                <li>
+                  <a
+                    class="show-1 active"
+                    href="<%= process.env.HOST %>/addBook"
+                    >Add Book</a
+                  >
+                </li>
+                <li><a href="<%= process.env.HOST %>/getBooks">All Book</a></li>
+                <li>
+                  <a href="<%= process.env.HOST %>/update">Update Stock</a>
+                </li>
+                <li>
+                  <a href="<%= process.env.HOST %>/logout"
+                    ><i class="fa fa-power-off" aria-hidden="true"></i
+                  ></a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
+      </div>
     </header>
     <div id="menu-1" class="homepage home-section container">
-        <div class="home-intro text-center">
-            <h2 class="animated fadeInLeft" style="text-align: center;">Add Book</h2>  
-        </div>
+      <div class="home-intro text-center">
+        <h2 class="animated fadeInLeft" style="text-align: center;">
+          Add Book
+        </h2>
+      </div>
     </div>
-    <main><div class="col-md-5 col-sm-7 center">
-                        <form action="/addBook" method="post" enctype="multipart/form-data">
-                                
-                            <fieldset class="col-md-7 col-sm-7">
-                                <label for="book">Book Id:</label>
-                                <input name="bookId" class="form-control" id ="book" value="<%= book.bookId %>" placeholder="Book ID" type="number" required>
-                            </fieldset>
-                            <fieldset class="col-md-7 col-sm-7" >
-                                <label for="name">Book Name:</label>
-                                <input name="name" class="form-control" value="<%= book.name %>" id="name" placeholder="Name" type="text"  required>
-                            </fieldset>
-                            <fieldset class="col-md-7 col-sm-7">
-                                <label for="author">Author:</label>
-                                <input name="author" id="author" class="form-control" value="<%= book.author %>" placeholder="Author" type="text"  required>
-                            </fieldset>
-                            <fieldset class="col-md-7 col-sm-7">
-                                <label for="gener">Gener:</label>
-                                <select id="gener" name="type" class="form-control" required>
-                                    <option disabled selected value>Category</option>
-                                    <option>Action and Adventure</option>
-                                    <option>Anthology</option>
-                                    <option>Classic</option>
-                                    <option>Comic and Graphic Novel</option>
-                                    <option>Crime and Detective</option>
-                                    <option>Drama</option>
-                                    <option>Fable</option>
-                                    <option>Fairy Tale</option>
-                                    <option>Fantasy</option>
-                                    <option>Horror</option>
-                                    <option>Humor</option>
-                                    <option>Mystery</option>
-                                    <option>Mythology</option>
-                                    <option>Realistic Fiction</option>
-                                    <option>Romance</option>
-                                    <option>Sci-Fi</option>
-                                    <option>Short Story</option>
-                                    <option>Suspense/Thriller</option>
-                                    <option>Biography/Autobiography</option>
-                                    <option>Reference Books</option>
-                                    <option>Self-help Book</option>
-                                    <option>Speech</option>
-                                    <option>Textbook</option>
-                                    <option>Poetry</option>
-                                    <option>Novel</option>
-                                </select>
-                            </fieldset>
-                            <fieldset class="col-md-7 col-sm-7">
-                                <label for="qty">Quantity:</label>
-                                <input name="qty" id="qty" class="form-control" value="<%= book.qty %>" placeholder="Qty" type="number"  required>
-                            </fieldset>
-                            <fieldset class="col-md-7 col-sm-7">
-                                <label for="days">Issue Days:</label>
-                                <input name="days" id="days" class="form-control" value="<%= book.issue_days %>" placeholder="Issue Days" type="number"  required>
-                            </fieldset>
-                            <fieldset class="col-md-7 col-sm-7">
-                                <label for="cost">Cost:</label>
-                                <input name="cost" id="cost" class="form-control" value="<%= book.cost %>" placeholder="Cost" type="number"  required>
-                            </fieldset>
-                            
-                            <fieldset class="col-md-7 col-sm-7">
-                                <br>
-                                <button type="submit" class="btn btn-primary btn-block " name="create" >Submit</button>
-                                <br>
-                                <br>
-                            </fieldset>
-                            
-                        </form>
-                        </div>
+    <main>
+      <div class="col-md-5 col-sm-7 center">
+        <form action="/addBook" method="post" enctype="multipart/form-data">
+          <fieldset class="col-md-7 col-sm-7">
+            <label for="book">Book Id:</label>
+            <input
+              name="bookId"
+              class="form-control"
+              id="book"
+              value="<%= book.bookId %>"
+              placeholder="Book ID"
+              type="number"
+              required
+            />
+          </fieldset>
+          <fieldset class="col-md-7 col-sm-7">
+            <label for="name">Book Name:</label>
+            <input
+              name="name"
+              class="form-control"
+              value="<%= book.name %>"
+              id="name"
+              placeholder="Name"
+              type="text"
+              required
+            />
+          </fieldset>
+          <fieldset class="col-md-7 col-sm-7">
+            <label for="author">Author:</label>
+            <input
+              name="author"
+              id="author"
+              class="form-control"
+              value="<%= book.author %>"
+              placeholder="Author"
+              type="text"
+              required
+            />
+          </fieldset>
+          <fieldset class="col-md-7 col-sm-7">
+            <label for="gener">Gener:</label>
+            <select id="gener" name="type" class="form-control" required>
+              <option disabled selected value>Category</option>
+              <option>Action and Adventure</option>
+              <option>Anthology</option>
+              <option>Classic</option>
+              <option>Comic and Graphic Novel</option>
+              <option>Crime and Detective</option>
+              <option>Drama</option>
+              <option>Fable</option>
+              <option>Fairy Tale</option>
+              <option>Fantasy</option>
+              <option>Horror</option>
+              <option>Humor</option>
+              <option>Mystery</option>
+              <option>Mythology</option>
+              <option>Realistic Fiction</option>
+              <option>Romance</option>
+              <option>Sci-Fi</option>
+              <option>Short Story</option>
+              <option>Suspense/Thriller</option>
+              <option>Biography/Autobiography</option>
+              <option>Reference Books</option>
+              <option>Self-help Book</option>
+              <option>Speech</option>
+              <option>Textbook</option>
+              <option>Poetry</option>
+              <option>Novel</option>
+            </select>
+          </fieldset>
+          <fieldset class="col-md-7 col-sm-7">
+            <label for="qty">Quantity:</label>
+            <input
+              name="qty"
+              id="qty"
+              class="form-control"
+              value="<%= book.qty %>"
+              placeholder="Qty"
+              type="number"
+              required
+            />
+          </fieldset>
+          <fieldset class="col-md-7 col-sm-7">
+            <label for="days">Issue Days:</label>
+            <input
+              name="days"
+              id="days"
+              class="form-control"
+              value="<%= book.issue_days %>"
+              placeholder="Issue Days"
+              type="number"
+              required
+            />
+          </fieldset>
+          <fieldset class="col-md-7 col-sm-7">
+            <label for="cost">Cost:</label>
+            <input
+              name="cost"
+              id="cost"
+              class="form-control"
+              value="<%= book.cost %>"
+              placeholder="Cost"
+              type="number"
+              required
+            />
+          </fieldset>
 
-                    
+          <fieldset class="col-md-7 col-sm-7">
+            <br />
+            <button
+              type="submit"
+              class="btn btn-primary btn-block"
+              name="create"
+            >
+              Submit
+            </button>
+            <br />
+            <br />
+          </fieldset>
+        </form>
+      </div>
     </main>
 
-    
-            <span class="border-top"></span>
-            <span class="border-left"></span>
-            <span class="border-right"></span>
-            <span class="border-bottom"></span>
-            <span class="shape-1"></span>
-            <span class="shape-2"></span>
+    <span class="border-top"></span>
+    <span class="border-left"></span>
+    <span class="border-right"></span>
+    <span class="border-bottom"></span>
+    <span class="shape-1"></span>
+    <span class="shape-2"></span>
 
-            <script src="js/jquery.min.js"></script>
-            <script src="js/templatemo_custom.js"></script>
-</body>
-
+    <script src="js/jquery.min.js"></script>
+    <script src="js/templatemo_custom.js"></script>
+  </body>
 </html>
